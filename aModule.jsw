@@ -1,0 +1,137 @@
+// Filename: backend/aModule.jsw (web modules need to have a .jsw extension)
+
+// create a graph class 
+class Graph { 
+    // defining vertex array and 
+    // adjacent list 
+    constructor(noOfVertices) 
+    { 
+        this.noOfVertices = noOfVertices; 
+        this.AdjList = new Map(); 
+    } 
+  
+    // functions to be implemented 
+  
+    addVertex(v) { 
+    // initialize the adjacent list with a 
+    // null array 
+    this.AdjList.set(v, []); 
+    } 
+    addEdge(v, w) { 
+        // get the list for vertex v and put the 
+        // vertex w denoting edge betweeen v and w 
+        this.AdjList.get(v).push(w); 
+    
+        // Since graph is undirected, 
+        // add an edge from w to v also 
+        // this.AdjList.get(w).push(v); 
+    } 
+    // Prints the vertex and adjacency list 
+    printGraph() 
+    { 
+        // get all the vertices 
+        var get_keys = this.AdjList.keys(); 
+    
+        // iterate over the vertices 
+        for (var i of get_keys)  
+        { 
+            // great the corresponding adjacency list 
+            // for the vertex 
+            var get_values = this.AdjList.get(i); 
+            var conc = ""; 
+    
+            // iterate over the adjacency list 
+            // concatenate the values into a string 
+            for (var j of get_values) 
+                conc += j + " "; 
+    
+            // print the vertex and its adjacency list 
+            console.log(i + " -> " + conc); 
+        } 
+    } 
+  
+    // bfs(v) 
+    // dfs(v) 
+} 
+
+
+export function returnG(){
+    var g = new Graph(6); 
+    var vertices = [
+    ["","How can I help you?",0],
+    ["My knee hurts","What part of your knee hurts?",1],
+    ["The back of my knee","You might have a knee sprain.",2],
+    ["My head hurts","How long has your head been hurting?",3],
+    ["Two days","Has your vision or balance been impacted?",4],
+    ["Yes","You might have a concussion, please see a doctor.",5],
+    ["No","Taking a painkiller can alleviate your symptoms.",6],
+    ["The front of my knee","You might have tendinitis.",7],
+    ["A few hours","Closely monitor your symptoms for the next day.",8]
+    ]; 
+  
+    // adding vertices 
+    for (var i = 0; i < vertices.length; i++) { 
+        g.addVertex(vertices[i]); 
+    } 
+    
+    // adding edges 
+    g.addEdge(vertices[0], vertices[1]); 
+    g.addEdge(vertices[1], vertices[2]); 
+    g.addEdge(vertices[0], vertices[3]); 
+    g.addEdge(vertices[3], vertices[4]); 
+    g.addEdge(vertices[4], vertices[5]);
+    g.addEdge(vertices[4], vertices[6]);
+    g.addEdge(vertices[1], vertices[7]);
+    g.addEdge(vertices[3], vertices[8]);
+    // console.log( g.AdjList.keys())
+    return [g, vertices];
+}
+
+
+
+// prints all vertex and 
+// its adjacency list 
+// A -> B D E 
+// B -> A C 
+// C -> B E F 
+// D -> A E 
+// E -> A D F C 
+// F -> E C 
+// g.printGraph(); 
+
+
+export function cosineSim(A,B) {
+        var dotproduct=0;
+        var mA=0;
+        var mB=0;
+        var i;
+        for(i = 0; i < A.length;i++){
+            dotproduct += (A[i] * B[i]);
+            mA += (A[i]*A[i]);
+            mB += (B[i]*B[i]);
+        }
+        mA = Math.sqrt(mA);
+        mB = Math.sqrt(mB);
+        var similarity = (dotproduct)/(mA)*(mB)
+        return similarity;
+    } 
+
+
+
+//Use the following code in one of your site's front-end files
+//to call the multiply function from backend/aModule.jsw.
+
+
+// import {multiply} from 'backend/aModule';
+
+// $w.onReady(function () {
+	
+// 	multiply(4,5).then(product => {
+// 	    console.log(product);
+// 	      // Logs: 20
+// 	})
+// 	.catch(error => {
+// 		console.log(error);
+// 	});
+// });
+
